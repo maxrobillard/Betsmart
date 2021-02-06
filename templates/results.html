@@ -5,10 +5,10 @@
 {% block content %}
   <div class="container">
     <div style="background:transparent !important" class="jumbotron">
-      <div style="font-family: 'Pacifico', cursive;">
+      <div>
         <p>
           <center>
-          <font size="8">Recherche pour un match</font>
+          <font size="10">Recherche pour un match</font>
           </center>
         </p>
       </div>
@@ -33,11 +33,14 @@
     <thead>
       <tr>
         <th>Site</th>
+        <th>Date du jour</th>
+        <th>Championnat</th>
         <th>equipe domicile</th>
         <th>cote</th>
         <th>equipe extérieur</th>
         <th>cote</th>
         <th>cote nul</th>
+        <th>date match<th>
       </tr>
     </thead>
 
@@ -45,11 +48,14 @@
     <tbody>
       <tr>
           <td>{{ hit['_source']['site'] }}</td>
+          <td>{{ hit['_source']['date_jour'] }}</td>
+          <td>{{ hit['_source']['championnat'] }}</td>
           <td>{{ hit['_source']['equipe1'] }}</td>
           <td>{{ hit['_source']['cote'] }}</td>
           <td>{{ hit['_source']['equipe2'] }}</td>
           <td>{{ hit['_source']['cote2'] }}</td>
           <td>{{ hit['_source']['cote3'] }}</td>
+          <td>{{ hit['_source']['date_match'] }}</td>
       </tr>
     </tbody>
 {% endfor %}

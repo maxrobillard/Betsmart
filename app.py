@@ -85,6 +85,7 @@ def search_request():
                     "query": search_term,
                     "fields": [
                         "site",
+                        "championnat",
                         "equipe1",
                         "cote1",
                         "equipe2",
