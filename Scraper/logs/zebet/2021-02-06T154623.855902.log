@@ -1,0 +1,147 @@
+2021-02-06 15:46:24 [scrapy] DEBUG: Redirecting (302) to <GET https://www.zebet.fr/en> from <GET https://www.zebet.fr/robots.txt>
+2021-02-06 15:46:24 [scrapy] DEBUG: Crawled (200) <GET https://www.zebet.fr/en> (referer: None)
+2021-02-06 15:46:24 [scrapy] DEBUG: Crawled (200) <GET https://www.zebet.fr/fr/competition/94-premier_league> (referer: None)
+2021-02-06 15:46:55 [scrapy] ERROR: Error processing {'cote': '\n        3,85    ',
+ 'cote2': '\n        2,05    ',
+ 'cote3': '\n        3,50    ',
+ 'equipe1': '\n                        Fulham     ',
+ 'equipe2': '\n                        West Ham     ',
+ 'site': 'zebet'}
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/twisted/internet/defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "/usr/local/lib/python3.6/dist-packages/scrapy/utils/defer.py", line 150, in f
+    return deferred_from_coro(coro_f(*coro_args, **coro_kwargs))
+  File "/scrapyrt/project/Scraper/pipelines.py", line 31, in process_item
+    self.db[self.collection_name].insert_one(dict(item))
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 701, in insert_one
+    session=session),
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 615, in _insert
+    bypass_doc_val, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 603, in _insert_one
+    acknowledged, _insert_command, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1497, in _retryable_write
+    with self._tmp_session(session) as s:
+  File "/usr/lib/python3.6/contextlib.py", line 81, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1829, in _tmp_session
+    s = self._ensure_session(session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1816, in _ensure_session
+    return self.__start_session(True, causal_consistency=False)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1766, in __start_session
+    server_session = self._get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1802, in _get_server_session
+    return self._topology.get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 488, in get_server_session
+    None)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 217, in _select_servers_loop
+    (self._error_message(selector), timeout, self.description))
+pymongo.errors.ServerSelectionTimeoutError: localhost:27017: [Errno 111] Connection refused, Timeout: 30s, Topology Description: <TopologyDescription id: 601eb9d0e227e7f53ebdd05a, topology_type: Single, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [Errno 111] Connection refused',)>]>
+2021-02-06 15:47:25 [scrapy] ERROR: Error processing {'cote': '\n        1,61    ',
+ 'cote2': '\n        5,40    ',
+ 'cote3': '\n        4,20    ',
+ 'equipe1': '\n                        Manchester United     ',
+ 'equipe2': '\n                        Everton     ',
+ 'site': 'zebet'}
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/twisted/internet/defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "/usr/local/lib/python3.6/dist-packages/scrapy/utils/defer.py", line 150, in f
+    return deferred_from_coro(coro_f(*coro_args, **coro_kwargs))
+  File "/scrapyrt/project/Scraper/pipelines.py", line 31, in process_item
+    self.db[self.collection_name].insert_one(dict(item))
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 701, in insert_one
+    session=session),
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 615, in _insert
+    bypass_doc_val, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 603, in _insert_one
+    acknowledged, _insert_command, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1497, in _retryable_write
+    with self._tmp_session(session) as s:
+  File "/usr/lib/python3.6/contextlib.py", line 81, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1829, in _tmp_session
+    s = self._ensure_session(session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1816, in _ensure_session
+    return self.__start_session(True, causal_consistency=False)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1766, in __start_session
+    server_session = self._get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1802, in _get_server_session
+    return self._topology.get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 488, in get_server_session
+    None)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 217, in _select_servers_loop
+    (self._error_message(selector), timeout, self.description))
+pymongo.errors.ServerSelectionTimeoutError: localhost:27017: [Errno 111] Connection refused, Timeout: 30s, Topology Description: <TopologyDescription id: 601eb9d0e227e7f53ebdd05a, topology_type: Single, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [Errno 111] Connection refused',)>]>
+2021-02-06 15:47:55 [scrapy] ERROR: Error processing {'cote': '\n        1,51    ',
+ 'cote2': '\n        6,75    ',
+ 'cote3': '\n        4,50    ',
+ 'equipe1': '\n                        Tottenham     ',
+ 'equipe2': '\n                        West Bromwich Albion     ',
+ 'site': 'zebet'}
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/twisted/internet/defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "/usr/local/lib/python3.6/dist-packages/scrapy/utils/defer.py", line 150, in f
+    return deferred_from_coro(coro_f(*coro_args, **coro_kwargs))
+  File "/scrapyrt/project/Scraper/pipelines.py", line 31, in process_item
+    self.db[self.collection_name].insert_one(dict(item))
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 701, in insert_one
+    session=session),
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 615, in _insert
+    bypass_doc_val, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 603, in _insert_one
+    acknowledged, _insert_command, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1497, in _retryable_write
+    with self._tmp_session(session) as s:
+  File "/usr/lib/python3.6/contextlib.py", line 81, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1829, in _tmp_session
+    s = self._ensure_session(session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1816, in _ensure_session
+    return self.__start_session(True, causal_consistency=False)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1766, in __start_session
+    server_session = self._get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1802, in _get_server_session
+    return self._topology.get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 488, in get_server_session
+    None)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 217, in _select_servers_loop
+    (self._error_message(selector), timeout, self.description))
+pymongo.errors.ServerSelectionTimeoutError: localhost:27017: [Errno 111] Connection refused, Timeout: 30s, Topology Description: <TopologyDescription id: 601eb9d0e227e7f53ebdd05a, topology_type: Single, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [Errno 111] Connection refused',)>]>
+2021-02-06 15:48:25 [scrapy] ERROR: Error processing {'cote': '\n        3,55    ',
+ 'cote2': '\n        2,15    ',
+ 'cote3': '\n        3,35    ',
+ 'equipe1': '\n                        Wolverhampton     ',
+ 'equipe2': '\n                        Leicester     ',
+ 'site': 'zebet'}
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/twisted/internet/defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "/usr/local/lib/python3.6/dist-packages/scrapy/utils/defer.py", line 150, in f
+    return deferred_from_coro(coro_f(*coro_args, **coro_kwargs))
+  File "/scrapyrt/project/Scraper/pipelines.py", line 31, in process_item
+    self.db[self.collection_name].insert_one(dict(item))
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 701, in insert_one
+    session=session),
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 615, in _insert
+    bypass_doc_val, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/collection.py", line 603, in _insert_one
+    acknowledged, _insert_command, session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1497, in _retryable_write
+    with self._tmp_session(session) as s:
+  File "/usr/lib/python3.6/contextlib.py", line 81, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1829, in _tmp_session
+    s = self._ensure_session(session)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1816, in _ensure_session
+    return self.__start_session(True, causal_consistency=False)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1766, in __start_session
+    server_session = self._get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/mongo_client.py", line 1802, in _get_server_session
+    return self._topology.get_server_session()
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 488, in get_server_session
+    None)
+  File "/usr/local/lib/python3.6/dist-packages/pymongo/topology.py", line 217, in _select_servers_loop
+    (self._error_message(selector), timeout, self.description))
+pymongo.errors.ServerSelectionTimeoutError: localhost:27017: [Errno 111] Connection refused, Timeout: 30s, Topology Description: <TopologyDescription id: 601eb9d0e227e7f53ebdd05a, topology_type: Single, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [Errno 111] Connection refused',)>]>

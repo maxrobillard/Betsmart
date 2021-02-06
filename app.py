@@ -9,21 +9,40 @@ import requests
 import pandas as pd
 import json
 
+from config import Config
+
 from flask_pymongo import PyMongo,MongoClient
 from flask_admin import Admin
 from flask_admin.contrib.pymongo import ModelView
+from pymongo import MongoClient
+
+
+
 
 LOCAL = False
 
 es_client = Elasticsearch(hosts=["localhost" if LOCAL else "elasticsearch"])
 
-app = Flask(__name__)
+app = Flask(__name__,instance_relative_config= True)
 
+
+app.config.from_object(Config)
+app.config.from_pyfile('config.py')
+
+MONGO_URI = app.config["MONGO_URI"]
+
+admin = Admin(app)
+client =  MongoClient(MONGO_URI)
+mongo = PyMongo(app)
+
+db=client["mongodb"]
+dbbet = db["Bet"]
 
 @app.route("/")
 def index():
     ping=es_client.ping()
-    return render_template("index.html",ping=ping)
+    m=client.database_names()
+    return render_template("index.html",ping=ping,mongo=m)
 
 @app.route("/scrape")
 def scrape():

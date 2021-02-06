@@ -63,10 +63,13 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'Scraper.pipelines.NewscrawlerPipeline': 300,
-    
+    'Scraper.pipelines.NewscrawlerPipeline': 50,
+    "Scraper.pipelines.MongoPipeline" : 50,
 
 }
+
+MONGO_DBNAME = "mongodb"
+MONGO_URI = "mongodb://mongodb:27017/mongodb"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

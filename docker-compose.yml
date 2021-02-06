@@ -69,7 +69,7 @@ services:
 
   mongodb:
     image: mongo:4.0.8
-    hostname: mongodb1
+    hostname: mongodb
     container_name: mongodb1
     restart: unless-stopped
     command: mongod
@@ -77,7 +77,7 @@ services:
       MONGO_INITDB_DATABASE: mongodb
       MONGODB_DATA_DIR: /data/db
       MONDODB_LOG_DIR: /dev/null
-    
+
     ports:
         - "27017:27017"
     networks:

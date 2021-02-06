@@ -12,3 +12,4 @@ numpy
 flask_pymongo
 PyMongo
 flask_admin
+config
