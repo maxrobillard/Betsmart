@@ -15,26 +15,6 @@ class NewscrawlerPipeline:
     def process_item(self, item, spider):
         return item
 
-from scrapy.exceptions import DropItem
-
-class TextPipeline(object):
-
-    def process_item(self, item, spider):
-        if item['equipe1']:
-            item["equipe1"] = clean_spaces(item["equipe1"])
-            item["equipe2"] = clean_spaces(item["equipe2"])
-            item["site"] = clean_spaces(item["site"])
-            item["cote"] = clean_spaces(item["cote"])
-            item["cote2"] = clean_spaces(item["cote2"])
-            item["cote3"] = clean_spaces(item["cote3"])
-            return item
-        else:
-            raise DropItem("Missing title in %s" % item)
-
-
-            def clean_spaces(string):
-                if string:
-                    return " ".join(string.split())
 
 class MongoPipeline(object):
 
