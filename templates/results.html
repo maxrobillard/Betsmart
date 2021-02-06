@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block search %}active{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div style="background:transparent !important" class="jumbotron">
+      <div style="font-family: 'Pacifico', cursive;">
+        <p>
+          <center>
+          <font size="8">Recherche pour un match</font>
+          </center>
+        </p>
+      </div>
+    </div>
+
+  <form action="/search/results" method="post">
+    <div class="input-group">
+      <input type="text" class="form-control input-lg" name="input" placeholder="Recherche"  autofocus>
+      <div class="input-group-btn">
+        <button class="btn btn-primary btn-lg" type="submit">
+          recherche
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <center>
+      <h1>Results: ({{ res['hits']['total'] }}) </h1>
+  </center>
+
+  <table class="table" style="color:#000000">
+    <thead>
+      <tr>
+        <th>Site</th>
+        <th>equipe domicile</th>
+        <th>cote</th>
+        <th>equipe extérieur</th>
+        <th>cote</th>
+        <th>cote nul</th>
+      </tr>
+    </thead>
+
+{% for hit in res['hits']['hits'] %}
+    <tbody>
+      <tr>
+          <td>{{ hit['_source']['site'] }}</td>
+          <td>{{ hit['_source']['equipe1'] }}</td>
+          <td>{{ hit['_source']['cote'] }}</td>
+          <td>{{ hit['_source']['equipe2'] }}</td>
+          <td>{{ hit['_source']['cote2'] }}</td>
+          <td>{{ hit['_source']['cote3'] }}</td>
+      </tr>
+    </tbody>
+{% endfor %}
+  </table>
+
+        <footer class="footer">
+
+        </footer>
+
+      </div>
+{% endblock %}

@@ -1,0 +1,87 @@
+version: '3.9'
+services:
+
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile_flask
+    hostname: app
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      MONGODB_DATABASE: mongodb
+      MONGODB_HOSTNAME: mongodb1
+      FLASK_ENV: development
+    networks:
+      - frontend
+
+
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile_scraper
+    hostname: scraper
+    container_name: scraper1
+    restart: always
+
+    ports:
+    - "9080:9080"
+    volumes:
+    - ./Scraper:/scrapyrt/project
+
+    networks:
+      - frontend
+
+
+  redis:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    ports:
+      - "6379:6379"
+    networks:
+      - frontend
+    restart: always
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    networks:
+      - frontend
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    environment:
+      ELASTICHSEARCH_URL: http://localhost:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - frontend
+    restart: always
+
+
+  mongodb:
+    image: mongo:4.0.8
+    hostname: mongodb1
+    container_name: mongodb1
+    restart: unless-stopped
+    command: mongod
+    environment:
+      MONGO_INITDB_DATABASE: mongodb
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    
+    ports:
+        - "27017:27017"
+    networks:
+      - frontend
+
+networks:
+  frontend:

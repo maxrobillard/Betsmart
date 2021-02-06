@@ -1,0 +1,14 @@
+Flask
+redis
+requests
+Dash
+Scrapy
+Werkzeug
+urllib3
+scrapy
+pandas
+elasticsearch
+numpy
+flask_pymongo
+PyMongo
+flask_admin
