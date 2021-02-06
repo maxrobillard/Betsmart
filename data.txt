@@ -1,0 +1,9 @@
+Site	equipe domicile	cote	equipe extérieur	cote	cote nul
+zebet	Wolverhampton	3,45	Leicester	2,17	3,35
+zebet	Leicester	3,30	Liverpool	2,07	3,35
+netbet	Wolverhampton	3,45	Leicester	2,17	3,35
+netbet	Leicester	3,40	Liverpool	2,12	3,45
+zebet	Wolverhampton	3,45	Leicester	2,17	3,35
+zebet	Leicester	3,30	Liverpool	2,07	3,35
+netbet	Wolverhampton	3,45	Leicester	2,17	3,35
+netbet	Leicester	3,40	Liverpool	2,12	3,45
