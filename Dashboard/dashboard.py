@@ -7,6 +7,8 @@ from dash.dependencies import Input, Output
 from arb_fig import evol_cote, fig_profit
 from arbitrage import what_matches, df, match_dd, colors, best_surebet, all_bets, surebet_dd, all_profits, profit
 
+from navbar import Navbar
+
 import plotly_express as px
 import plotly.graph_objects as go
 
@@ -22,6 +24,7 @@ app = dash.Dash(__name__,title='Sure Bet',external_stylesheets=[dbc.themes.BOOTS
 
 app.layout = html.Div(style={'backgroundColor': colors['background']},
                     children=[
+                        html.Div(Navbar()),
                         html.Div(
                             className='app-header--title',
                             children=[
