@@ -19,7 +19,8 @@ from . import dashapp,mongo,client,MONGO_URI,db,dbbet,server,es_client
 def index():
     ping=es_client.ping()
     m=client.database_names()
-    return render_template("index.html",ping=ping,mongo=m)
+    df=read_mongo()
+    return render_template("index.html",ping=ping,mongo=m,df=df)
 
 @server.route("/scrape")
 def scrape():
@@ -74,6 +75,14 @@ def search_request():
         }
     )
     return render_template('results.html', res=res )
+
+
+def read_mongo(no_id=True):
+    cursor = dbbet.find()
+    df = pd.DataFrame(list(cursor))
+    if no_id:
+        del df['_id']
+    return df
 
 body = dbc.Container(
     [
