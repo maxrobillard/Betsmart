@@ -37,13 +37,7 @@ services:
       - frontend
 
 
-  redis:
-    image: docker.elastic.co/kibana/kibana:7.10.2
-    ports:
-      - "6379:6379"
-    networks:
-      - frontend
-    restart: always
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
     networks:
