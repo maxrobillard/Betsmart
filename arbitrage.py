@@ -20,7 +20,6 @@ def data_cleaning(data):
     dfzebet['heure du match'] = date[1]
     data = pd.concat([dfnetbet,dfzebet])
     data[['Date du match']] = pd.to_datetime(data[['Date du match']].stack()).unstack()
-    print(data)
     return data
 
 def what_matches(data):
@@ -29,7 +28,6 @@ def what_matches(data):
 
 def is_a_surebet(data,equipe_1,equipe_2):
     data = data[(data['equipe_domicile']==equipe_1)&( data['equipe_exterieur']==equipe_2)]
-    data[['cote_domicile','cote_exterieur','cote_nul']] = data[['cote_domicile','cote_exterieur','cote_nul']].apply(lambda x : 1/x)
     #data[['somme']] = data[['cote_domicile','cote_exterieur','cote_nul']].sum(axis=1)
     mini = data['cote_domicile'].iloc[0] + data['cote_exterieur'].iloc[0] + data['cote_nul'].iloc[0]
     a, b, c = 0, 0, 0
@@ -37,39 +35,73 @@ def is_a_surebet(data,equipe_1,equipe_2):
         for i in range(data.shape[0]):
             if k!=i:
                 for j in range(data.shape[0]):
-                    S = data['cote_domicile'].iloc[k] + data['cote_exterieur'].iloc[i] + data['cote_nul'].iloc[j]
+                    S = 1/data['cote_domicile'].iloc[k] + 1/data['cote_exterieur'].iloc[i] + 1/data['cote_nul'].iloc[j]
                     if S < mini:
                         mini = S
                         a,b,c = k,i,j
-    return mini,data['Site'].iloc[a],data['Site'].iloc[b],data['Site'].iloc[c]
+    return mini,data['Site'].iloc[a],data['Site'].iloc[b],data['Site'].iloc[c],data['cote_domicile'].iloc[a],data['cote_exterieur'].iloc[b],data['cote_nul'].iloc[c]
 
 def best_surebet(data):
     df_matches = what_matches(data)
-    list_S = []
-    list_s1 = []
-    list_s2 = []
-    list_s3 = []
-    liste_e1 = []
-    liste_e2 = []
-    liste_e3 = []
+    [list_S, list_s1, list_s2, list_s3, liste_e1, liste_e2, list_cote_dom, list_cote_ext, list_cote_nul] = [[] for k in range(9)]
     for k in range(df_matches.shape[0]):
-        S, site_1, site_2, site_3 = is_a_surebet(data,data['equipe_domicile'].iloc[k],data['equipe_exterieur'].iloc[k])
+        S, site_1, site_2, site_3, cote_e1, cote_e2, cote_nul = is_a_surebet(data,data['equipe_domicile'].iloc[k],data['equipe_exterieur'].iloc[k])
         list_S.append(S)
         list_s1.append(site_1)
         list_s2.append(site_2)
         list_s3.append(site_3)
         liste_e1.append(data['equipe_domicile'].iloc[k])
         liste_e2.append(data['equipe_exterieur'].iloc[k])
-        liste_e3.append(data['equipe_domicile'].iloc[k])
-    df = pd.DataFrame({'rate':list_S,'site_1':list_s1,'site_2':list_s2,'e1':liste_e1,'e2':liste_e2})
+        list_cote_dom.append(cote_e1)
+        list_cote_ext.append(cote_e2)
+        list_cote_nul.append(cote_nul)
+    df = pd.DataFrame({'rate':list_S,'site_1':list_s1,'site_2':list_s2,'site_3':list_s3,'e1':liste_e1,'e2':liste_e2,'cote_e1':list_cote_dom,'cote_e2':list_cote_ext,'cote_nul':list_cote_nul})
     df = df.sort_values(by=['rate'])
+    df = df.reset_index(drop=True).drop_duplicates()
     return df
 
 
+def how_to_bet(data,mise):
+    e1 = data['e1']
+    e2 = data['e2']
+    B1 = data['site_1']
+    B2 = data['site_2']
+    B3 = data['site_3']
+    me1 = mise/data['cote_e1']
+    me2 = mise/data['cote_e2']
+    mn = mise/data['cote_nul']
+    df = pd.DataFrame({'equipe':[e1,e2,'nul'],'mise':[me1,me2,mn],'bookmaker':[B1,B2,B3],'cotes':[data['cote_e1'],data['cote_e2'],data['cote_nul']]})
+    return df
+
+
+def all_bets(data, mise):
+    i = 0
+    list_bets = []
+    while i<data.shape[0] and data['rate'].iloc [i]<1:
+        list_bets.append(how_to_bet(data.iloc[i],mise))
+        i+=1
+    return list_bets
+
+
+def profit(data):
+    p = data['mise'].iloc[0]*(data['cotes'].iloc[0]-1)-data['mise'].iloc[1]-data['mise'].iloc[2]
+    return p
+
+def all_profits(liste_bets):
+    liste_profits = []
+    for bet in liste_bets:
+        p = profit(bet)
+        liste_profits.append(p)
+    return liste_profits
+
+
 df = data_cleaning(df)
-#print(df.head())
-df1 = df[df['equipe_domicile']==df['equipe_domicile'][0]]
+print(df.head())
 
-#print(is_a_surebet(df,df['equipe_domicile'][0],df['equipe_exterieur'][0]))
-
-print(best_surebet(df))
+df_matches = what_matches(df)
+print(df_matches)
+df_bets = best_surebet(df)
+print(df_bets)
+bets = all_bets(df_bets,100)
+print(bets)
+print(all_profits(bets))

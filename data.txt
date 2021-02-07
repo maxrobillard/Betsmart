@@ -1,4 +1,9 @@
 Site	Date du scraping	Championnat	Equipe domicile	Cote	equipe extérieur	Cote	Cote nul	Date du match
+netbet	02-07-2021	première league	Paris	1,6	Marseille	6	3,4	15-02-2021
+zebet	02-07-2021	première league	Paris	1,9	Marseille	4,2	3,1	08/02 13:00
+netbet	02-07-2021	première league	Nancy	1,6	Lille	6,9	3,4	15-02-2021
+zebet	02-07-2021	première league	Nancy	1,9	Lille	4,2	3,1	08/02 13:00
+
 zebet	02-07-2021	première league	Tottenham	1,51	West Bromwich Albion	6,40	4,40	07/02 13:00
 zebet	02-07-2021	première league	Wolverhampton	3,70	Leicester	2,15	3,30	07/02 15:00
 zebet	02-07-2021	première league	Liverpool	3,55	Manchester City	2,07	3,60	07/02 17:30
