@@ -25,7 +25,7 @@ def index():
 def scrape():
     response = requests.get("http://scraper:9080/crawl.json?spider_name=zebet&url=https://www.zebet.fr/fr/competition/94-premier_league")
     output_json = json.loads(response.text)
-    response2 = requests.get("http://scraper:9080/crawl.json?spider_name=netbet&url=https://www.netbet.fr/football/angleterre/premier-league")
+    response2 = requests.get("http://scraper:9080/crawl.json?spider_name=netbet&url=https://www.netbet.fr/football/angleterre/premier-league?tab=matchs")
     output_json1 = json.loads(response2.text)
 
     for doc in output_json["items"]:
