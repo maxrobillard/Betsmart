@@ -1,50 +1,21 @@
+from flask import Blueprint, render_template
+from flask import current_app as app
 
-from flask import Flask, render_template, request
-import subprocess
-from datetime import datetime
-import os
-from elasticsearch import Elasticsearch,ElasticsearchException
-from elasticsearch.helpers import bulk
-import requests
-import pandas as pd
-import json
-
-from config import Config
-
-from flask_pymongo import PyMongo,MongoClient
-from flask_admin import Admin
-from flask_admin.contrib.pymongo import ModelView
-from pymongo import MongoClient
+import dash
+import dash_core_components as dcc
+import dash_bootstrap_components as dbc
+import dash_html_components as html
+from dash.dependencies import Input, Output
 
 
 
-
-LOCAL = False
-
-es_client = Elasticsearch(hosts=["localhost" if LOCAL else "elasticsearch"])
-
-app = Flask(__name__,instance_relative_config= True)
-
-
-app.config.from_object(Config)
-app.config.from_pyfile('config.py')
-
-MONGO_URI = app.config["MONGO_URI"]
-
-admin = Admin(app)
-client =  MongoClient(MONGO_URI)
-mongo = PyMongo(app)
-
-db=client["mongodb"]
-dbbet = db["Bet"]
-
-@app.route("/")
+@server.route("/")
 def index():
     ping=es_client.ping()
     m=client.database_names()
     return render_template("index.html",ping=ping,mongo=m)
 
-@app.route("/scrape")
+@server.route("/scrape")
 def scrape():
     response = requests.get("http://scraper:9080/crawl.json?spider_name=zebet&url=https://www.zebet.fr/fr/competition/94-premier_league")
     output_json = json.loads(response.text)
@@ -69,11 +40,11 @@ def scrape():
     return render_template('search.html')
 
 
-@app.route("/search")
+@server.route("/search")
 def search():
     return render_template('search.html')
 
-@app.route('/search/results', methods=['GET', 'POST'])
+@server.route('/search/results', methods=['GET', 'POST'])
 def search_request():
     search_term = request.form["input"]
     res = es_client.search(
@@ -97,7 +68,3 @@ def search_request():
         }
     )
     return render_template('results.html', res=res )
-
-
-if __name__ == "__main__":
-    app.run(port=5000, debug=True, host="127.0.0.1")
