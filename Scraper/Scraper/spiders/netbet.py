@@ -35,7 +35,7 @@ class Netbet(scrapy.Spider):
             yield NewscrawlerItem(
                 date_jour = date_jour,
                 site = "netbet",
-                championnat = "première league",
+                championnat = "Première League",
                 cote = text_value,
                 cote2 = text_value1,
                 cote3 = text_value2,
