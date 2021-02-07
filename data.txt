@@ -1,27 +1,8 @@
-zebet	02-06-2021	première league	Manchester United	1,65	Everton	5,80	10,10	06/02 21:00
-zebet	02-06-2021	première league	Tottenham	1,51	West Bromwich Albion	6,75	14,50	07/02 13:00
-zebet	02-06-2021	première league	Wolverhampton	3,55	Leicester	2,15	3,35	07/02 15:00
-zebet	02-06-2021	première league	Liverpool	3,55	Manchester City	2,10	30,60	07/02 17:30
-netbet	02-06-2021	première league	Manchester United	1,5	Everton	5,50	4,30	06/02 21:00
-netbet	02-06-2021	première league	Tottenham	1,58	West Bromwich Albion	6,25	4,20	07/02 13:00
-netbet	02-06-2021	première league	Wolverhampton	3,5	Leicester	2,45	3,75	07/02 15:00
-netbet	02-06-2021	première league	Liverpool	3,5	Manchester City	2,0	3,10	07/02 17:30
-zebet	02-06-2021	première league	Sheffield United	7,00	Chelsea	1,48	4,50	07/02 20:15
-zebet	02-06-2021	première league	Leeds United	1,81	Crystal Palace	4,10	3,90	08/02 21:00
-zebet	02-06-2021	première league	Leicester	3,30	Liverpool	2,07	3,35	13/02 13:30
-zebet	02-06-2021	première league	Crystal Palace	2,20	Burnley FC	3,15	3,15	13/02 16:00
-zebet	02-06-2021	première league	Manchester City	1,29	Tottenham	8,25	5,20	13/02 18:30
-zebet	02-06-2021	première league	Brighton	2,57	Aston Villa	2,50	3,35	13/02 21:00
-zebet	02-06-2021	première league	Southampton	2,30	Wolverhampton	2,95	3,20	14/02 13:00
-zebet	02-06-2021	première league	West Bromwich Albion	8,00	Manchester United	1,30	5,20	14/02 15:00
-zebet	02-06-2021	première league	Arsenal	1,73	Leeds United	4,00	3,85	14/02 17:30
-zebet	02-06-2021	première league	Everton	1,68	Fulham	4,50	3,70	14/02 20:00
-zebet	02-06-2021	première league	West Ham	1,68	Sheffield United	4,70	3,65	15/02 19:00
-zebet	02-06-2021	première league	Chelsea	1,23	Newcastle	9,75	5,80	15/02 21:00
+Site	Date du scraping	Championnat	Equipe domicile	Cote	equipe extérieur	Cote	Cote nul	Date du match
 zebet	02-07-2021	première league	Tottenham	1,51	West Bromwich Albion	6,40	4,40	07/02 13:00
-zebet	02-07-2021	première league	Wolverhampton	3,70	Leicester	2,10	3,35	07/02 15:00
-zebet	02-07-2021	première league	Liverpool	3,60	Manchester City	2,07	3,60	07/02 17:30
-zebet	02-07-2021	première league	Sheffield United	7,25	Chelsea	1,48	4,50	07/02 20:15
+zebet	02-07-2021	première league	Wolverhampton	3,70	Leicester	2,15	3,30	07/02 15:00
+zebet	02-07-2021	première league	Liverpool	3,55	Manchester City	2,07	3,60	07/02 17:30
+zebet	02-07-2021	première league	Sheffield United	7,25	Chelsea	1,47	4,50	07/02 20:15
 zebet	02-07-2021	première league	Leeds United	1,82	Crystal Palace	4,10	3,90	08/02 21:00
 zebet	02-07-2021	première league	Leicester	3,35	Liverpool	2,02	3,40	13/02 13:30
 zebet	02-07-2021	première league	Crystal Palace	2,20	Burnley FC	3,15	3,15	13/02 16:00
@@ -33,18 +14,18 @@ zebet	02-07-2021	première league	Arsenal	1,75	Leeds United	3,90	3,80	14/02 17:3
 zebet	02-07-2021	première league	Everton	1,68	Fulham	4,50	3,70	14/02 20:00
 zebet	02-07-2021	première league	West Ham	1,80	Sheffield United	4,20	3,40	15/02 19:00
 zebet	02-07-2021	première league	Chelsea	1,23	Newcastle	9,75	5,80	15/02 21:00
-zebet	02-07-2021	première league	Tottenham	1,51	West Bromwich Albion	6,40	4,40	07/02 13:00
-zebet	02-07-2021	première league	Wolverhampton	3,70	Leicester	2,10	3,35	07/02 15:00
-zebet	02-07-2021	première league	Liverpool	3,60	Manchester City	2,07	3,60	07/02 17:30
-zebet	02-07-2021	première league	Sheffield United	7,25	Chelsea	1,48	4,50	07/02 20:15
-zebet	02-07-2021	première league	Leeds United	1,82	Crystal Palace	4,10	3,90	08/02 21:00
-zebet	02-07-2021	première league	Leicester	3,35	Liverpool	2,02	3,40	13/02 13:30
-zebet	02-07-2021	première league	Crystal Palace	2,20	Burnley FC	3,15	3,15	13/02 16:00
-zebet	02-07-2021	première league	Manchester City	1,32	Tottenham	7,50	5,10	13/02 18:30
-zebet	02-07-2021	première league	Brighton	2,57	Aston Villa	2,50	3,35	13/02 21:00
-zebet	02-07-2021	première league	Southampton	2,35	Wolverhampton	2,92	3,10	14/02 13:00
-zebet	02-07-2021	première league	West Bromwich Albion	8,00	Manchester United	1,30	5,20	14/02 15:00
-zebet	02-07-2021	première league	Arsenal	1,75	Leeds United	3,90	3,80	14/02 17:30
-zebet	02-07-2021	première league	Everton	1,68	Fulham	4,50	3,70	14/02 20:00
-zebet	02-07-2021	première league	West Ham	1,80	Sheffield United	4,20	3,40	15/02 19:00
-zebet	02-07-2021	première league	Chelsea	1,23	Newcastle	9,75	5,80	15/02 21:00
+netbet	02-07-2021	première league	Tottenham	1,45	West Bromwich	7,25	4,30	02-07-2021
+netbet	02-07-2021	première league	Wolverhampton	3,65	Leicester	2,10	3,25	02-07-2021
+netbet	02-07-2021	première league	Liverpool	3,50	Manchester City	2,05	3,55	02-07-2021
+netbet	02-07-2021	première league	Sheffield United	7,25	Chelsea	1,45	4,40	02-07-2021
+netbet	02-07-2021	première league	Leeds United	1,82	Crystal Palace	4,10	3,90	08-02-2021
+netbet	02-07-2021	première league	Leicester	3,50	Liverpool	2,07	3,55	13-02-2021
+netbet	02-07-2021	première league	Crystal Palace	2,25	Burnley FC	3,25	3,25	13-02-2021
+netbet	02-07-2021	première league	Manchester City	1,34	Tottenham	8,50	5,30	13-02-2021
+netbet	02-07-2021	première league	Brighton	2,60	Aston Villa	2,67	3,40	13-02-2021
+netbet	02-07-2021	première league	Southampton	2,42	Wolverhampton	3,05	3,20	14-02-2021
+netbet	02-07-2021	première league	West Bromwich	8,25	Manchester United	1,34	5,40	14-02-2021
+netbet	02-07-2021	première league	Arsenal	1,81	Leeds United	4,10	3,95	14-02-2021
+netbet	02-07-2021	première league	Everton	1,73	Fulham	4,60	3,80	14-02-2021
+netbet	02-07-2021	première league	West Ham	1,85	Sheffield United	4,40	3,55	15-02-2021
+netbet	02-07-2021	première league	Chelsea	1,25	Newcastle	11,50	6,10	15-02-2021
