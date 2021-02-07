@@ -16,3 +16,5 @@ config
 dash_core_components
 dash_bootstrap_components
 flask_bootstrap
+plotly
+plotly_express

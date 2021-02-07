@@ -3,6 +3,12 @@ import numpy as np
 import pymongo
 from datetime import datetime, date
 
+colors = {
+  'background': '#5D6D7E',
+  'text' : 'white',
+  'PN': '#2874A6',
+  'GN': '#A93226'
+}
 
 df = pd.read_csv('data.txt',sep='\t')
 df.columns = ['Site', 'Date du scraping', 'Championat','equipe_domicile', 'cote_domicile', 'equipe_exterieur', 'cote_exterieur', 'cote_nul', 'Date du match']
@@ -25,6 +31,13 @@ def data_cleaning(data):
 def what_matches(data):
     data = data[data['Date du match']>datetime.now()][['equipe_domicile','equipe_exterieur']].drop_duplicates()
     return data
+
+def match_dd(data):
+    l_dic = []
+    data = what_matches(data)
+    for i in range(data.shape[0]):
+        l_dic.append({'label':df_matches['equipe_domicile'].iloc[i] +' vs '+df_matches['equipe_exterieur'].iloc[i],'value':df_matches['equipe_domicile'].iloc[i]+'/'+df_matches['equipe_exterieur'].iloc[i]})
+    return l_dic
 
 def is_a_surebet(data,equipe_1,equipe_2):
     data = data[(data['equipe_domicile']==equipe_1)&( data['equipe_exterieur']==equipe_2)]
@@ -74,7 +87,7 @@ def how_to_bet(data,mise):
     return df
 
 
-def all_bets(data, mise):
+def all_bets(data, mise=100):
     i = 0
     list_bets = []
     while i<data.shape[0] and data['rate'].iloc [i]<1:
@@ -94,14 +107,24 @@ def all_profits(liste_bets):
         liste_profits.append(p)
     return liste_profits
 
+def surebet_dd(data,mise=100):
+    l_dic = []
+    data = all_bets(best_surebet(data),mise)
+    for i in range(len(data)):
+        surebet =data[i]
+        l_dic.append({'label':surebet['equipe'].iloc[0] +' vs '+surebet['equipe'].iloc[1],'value':str(i)})
+    return l_dic
+
+
 
 df = data_cleaning(df)
-print(df.head())
 
 df_matches = what_matches(df)
-print(df_matches)
 df_bets = best_surebet(df)
-print(df_bets)
 bets = all_bets(df_bets,100)
-print(bets)
+
+d = [{'label':df_matches['equipe_domicile'].iloc[i] +' vs '+df_matches['equipe_exterieur'].iloc[i],'value':[df_matches['equipe_domicile'].iloc[i]]} for i in range(df_matches.shape[0])]
+
+print(profit(bets[0]))
 print(all_profits(bets))
+#print(profit_dd(df))
