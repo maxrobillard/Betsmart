@@ -13,3 +13,6 @@ flask_pymongo
 PyMongo
 flask_admin
 config
+dash_core_components
+dash_bootstrap_components
+flask_bootstrap

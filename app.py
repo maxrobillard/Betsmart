@@ -16,35 +16,39 @@ from flask_admin import Admin
 from flask_admin.contrib.pymongo import ModelView
 from pymongo import MongoClient
 
-
-
+from dash import Dash
+import dash_html_components as html
+import dash_core_components as dcc
+import dash_bootstrap_components as dbc
+from flask_bootstrap import Bootstrap
 
 LOCAL = False
 
 es_client = Elasticsearch(hosts=["localhost" if LOCAL else "elasticsearch"])
 
-app = Flask(__name__,instance_relative_config= True)
+server = Flask(__name__,instance_relative_config= True)
+dash = Dash(__name__, server = server, routes_pathname_prefix='/dash/',
+				external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+server.config.from_object(Config)
+server.config.from_pyfile('config.py')
 
-app.config.from_object(Config)
-app.config.from_pyfile('config.py')
+MONGO_URI = server.config["MONGO_URI"]
 
-MONGO_URI = app.config["MONGO_URI"]
-
-admin = Admin(app)
+admin = Admin(server)
 client =  MongoClient(MONGO_URI)
-mongo = PyMongo(app)
+mongo = PyMongo(server)
 
 db=client["mongodb"]
 dbbet = db["Bet"]
 
-@app.route("/")
+@server.route("/")
 def index():
     ping=es_client.ping()
     m=client.database_names()
     return render_template("index.html",ping=ping,mongo=m)
 
-@app.route("/scrape")
+@server.route("/scrape")
 def scrape():
     response = requests.get("http://scraper:9080/crawl.json?spider_name=zebet&url=https://www.zebet.fr/fr/competition/94-premier_league")
     output_json = json.loads(response.text)
@@ -69,11 +73,11 @@ def scrape():
     return render_template('search.html')
 
 
-@app.route("/search")
+@server.route("/search")
 def search():
     return render_template('search.html')
 
-@app.route('/search/results', methods=['GET', 'POST'])
+@server.route('/search/results', methods=['GET', 'POST'])
 def search_request():
     search_term = request.form["input"]
     res = es_client.search(
@@ -98,6 +102,17 @@ def search_request():
     )
     return render_template('results.html', res=res )
 
+body = dbc.Container(
+    [
+
+        html.H1('Page 1')
+
+    ],
+    className="mt-4",
+)
+
+dash.layout = html.Div([body])
+
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True, host="127.0.0.1")
+    server.run(port=5000, debug=True, host="127.0.0.1")
