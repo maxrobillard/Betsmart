@@ -1,46 +1,19 @@
 
-from flask import Flask, render_template, request
-import subprocess
+from flask import render_template, request
 from datetime import datetime
 import os
 from elasticsearch import Elasticsearch,ElasticsearchException
-from elasticsearch.helpers import bulk
 import requests
 import pandas as pd
 import json
 
-from config import Config
-
-from flask_pymongo import PyMongo,MongoClient
-from flask_admin import Admin
-from flask_admin.contrib.pymongo import ModelView
-from pymongo import MongoClient
-
-from dash import Dash
+from dash.dependencies import Input, Output
 import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from flask_bootstrap import Bootstrap
 
-LOCAL = False
-
-es_client = Elasticsearch(hosts=["localhost" if LOCAL else "elasticsearch"])
-
-server = Flask(__name__,instance_relative_config= True)
-dash = Dash(__name__, server = server, routes_pathname_prefix='/dash/',
-				external_stylesheets=[dbc.themes.BOOTSTRAP])
-
-server.config.from_object(Config)
-server.config.from_pyfile('config.py')
-
-MONGO_URI = server.config["MONGO_URI"]
-
-admin = Admin(server)
-client =  MongoClient(MONGO_URI)
-mongo = PyMongo(server)
-
-db=client["mongodb"]
-dbbet = db["Bet"]
+from . import dashapp,mongo,client,MONGO_URI,db,dbbet,server,es_client
 
 @server.route("/")
 def index():
@@ -111,8 +84,4 @@ body = dbc.Container(
     className="mt-4",
 )
 
-dash.layout = html.Div([body])
-
-
-if __name__ == "__main__":
-    server.run(port=5000, debug=True, host="127.0.0.1")
+dashapp.layout = html.Div([body])

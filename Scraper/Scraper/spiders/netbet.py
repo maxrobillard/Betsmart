@@ -7,7 +7,7 @@ from datetime import datetime
 class Netbet(scrapy.Spider):
     name = "netbet"
     allowed_domains = ["netbet.fr"]
-    start_urls = ["https://www.netbet.fr/football/angleterre/premier-league"]
+    start_urls = ["https://www.netbet.fr/football/angleterre/premier-league?tab=matchs"]
 
     def parse(self, response):
         #match = response.css("div.item-content.catcomp.item-bloc-type-1").getall()
