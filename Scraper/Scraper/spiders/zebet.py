@@ -17,6 +17,7 @@ class Zebet(scrapy.Spider):
 
         now = datetime.now()
         date_jour = now.strftime("%m-%d-%Y")
+        year = now.strftime("%Y")
 
         for cote in match:
             text_match =  cote.css('span.pmq-cote-acteur.uk-text-truncate::text')[0].get()
@@ -27,8 +28,11 @@ class Zebet(scrapy.Spider):
 
             date_match = cote.css("div.bet-time::text").get()
 
-            if (date_match=="Auj"):
+            if date_match=="Auj":
                 date_match =date_jour
+            #else:
+            #    date_match = date_match.split(' ')[0]
+            #    date_match += +'/'+str(year)
 
             yield NewscrawlerItem(
                 date_jour = date_jour,

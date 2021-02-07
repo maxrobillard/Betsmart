@@ -16,6 +16,7 @@ class Netbet(scrapy.Spider):
 
         now = datetime.now()
         date_jour = now.strftime("%m-%d-%Y")
+        year = now.strftime("%Y")
 
         for cote in match:
             text_match =  cote.css('div.nb-match_actor::text')[0].get()
@@ -23,10 +24,13 @@ class Netbet(scrapy.Spider):
             text_value =  cote.css("div.nb-odds_amount::text")[0].get()
             text_value2 =  cote.css("div.nb-odds_amount::text")[1].get()
             text_value1 = cote.css("div.nb-odds_amount::text")[2].get()
-
             date_match = cote.css("div.nb-event_datestart::text").get()
-            if (date_match=="Auj"):
-                date_match = "06/02"
+
+            if date_match=="Auj.":
+                date_match = date_jour
+            else:
+                date_match += '-' + str(year)
+                date_match = date_match.replace('/','-')
 
             yield NewscrawlerItem(
                 date_jour = date_jour,
