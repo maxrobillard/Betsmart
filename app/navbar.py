@@ -5,10 +5,10 @@ import dash_html_components as html
 
 
 def Navbar():
-    LOGO = "assets/statics/esiee.png"
+    LOGO = "static/img/esiee.png"
     items=[
         dbc.DropdownMenuItem("Kaczmarczyk Victor",href="https://www.linkedin.com/in/victor-kaczmarczyk-747a85196/",external_link=True),
-        dbc.DropdownMenuItem("Robillard Maxime",href="https://www.linkedin.com/",external_link=True),
+        dbc.DropdownMenuItem("Robillard Maxime",href="https://www.linkedin.com/in/maxime-robillard/",external_link=True),
         ]
     navbar = dbc.Navbar(
                     [
