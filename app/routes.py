@@ -71,26 +71,29 @@ def search():
 @server.route('/search/results', methods=['GET', 'POST'])
 def search_request():
     search_term = request.form["input"]
-    res = es_client.search(
-        index="bet",
-        size=50,
-        body={
-            "query": {
-                "multi_match" : {
-                    "query": search_term,
-                    "fields": [
-                        "site",
-                        "championnat",
-                        "equipe1",
-                        "cote1",
-                        "equipe2",
-                        "cote2",
-                        "cote3"
-                    ]
+    try :
+        res = es_client.search(
+            index="bet",
+            size=50,
+            body={
+                "query": {
+                    "multi_match" : {
+                        "query": search_term,
+                        "fields": [
+                            "site",
+                            "championnat",
+                            "equipe1",
+                            "cote1",
+                            "equipe2",
+                            "cote2",
+                            "cote3"
+                        ]
+                    }
                 }
             }
-        }
-    )
+        )
+    except :
+        return render_template("index.html",error="Veuillez scraper avant de faire une recherche")
     return render_template('results.html', res=res )
 
 def read_mongo(no_id=True):
