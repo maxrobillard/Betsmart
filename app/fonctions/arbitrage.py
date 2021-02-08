@@ -15,6 +15,7 @@ colors = {
 def data_cleaning(data):
     data[['cote_domicile','cote_exterieur','cote_nul']] = data[['cote_domicile','cote_exterieur','cote_nul']].replace(',','.',regex=True).astype(float)
     data[['Site', 'equipe_domicile', 'equipe_exterieur']] = data[['Site', 'equipe_domicile', 'equipe_exterieur']].astype(str)
+    data['Site']=data['Site'].str.rstrip('\n')
     data[['Date du scraping']] = pd.to_datetime(data[['Date du scraping']].stack()).unstack()
     dfzebet = data[data['Site']=='zebet']
     dfnetbet = data[data['Site']=='netbet']

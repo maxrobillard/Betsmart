@@ -105,15 +105,11 @@ def read_mongo(no_id=True):
 
 df = read_mongo()
 
-#df = pd.read_csv('data.txt',sep='\t')
+
 df.columns = ['Date du scraping','Site', 'Championnat','cote_domicile','cote_exterieur', 'cote_nul','equipe_domicile','equipe_exterieur','Date du match']
 df = ar.data_cleaning(df)
 
 
-df_test = pd.read_csv('app/data.txt',sep='\t')
-df_test.columns = ['Site','Date du scraping','Championnat','equipe_domicile','cote_domicile','equipe_exterieur','cote_exterieur','cote_nul','Date du match']
-df_test = ar.data_cleaning(df_test)
-df = pd.concat([df,df_test])
 
 df_matches = ar.what_matches(df)
 list_surebets = ar.all_bets(ar.best_surebet(df),100)
@@ -154,7 +150,7 @@ body = html.Div(style={'backgroundColor': colors['background']},
                                                 html.Div(
                                                     dcc.Graph(
                                                         id = 'fig_cotes',
-                                                        figure = fg.evol_cote(df,'Paris','Marseille','zebet')
+                                                        figure = fg.evol_cote(df,df_matches['equipe_domicile'].iloc[0],df_matches['equipe_exterieur'].iloc[0],'netbet')
                                                     )
                                                 ),width=7,style={'width':'98%','margin-left':'20px'}
                                             ),
@@ -171,7 +167,7 @@ body = html.Div(style={'backgroundColor': colors['background']},
                                                                     {'label':'Zebet','value':'zebet'},
                                                                     {'label':'Netbet','value':'netbet'},
                                                                 ],
-                                                                value='zebet'
+                                                                value='netbet'
                                                             )
 
 
@@ -265,8 +261,8 @@ def update_fig_evo(match_dropdown,id_radioItems,df=df):
         for i in range(2,len(l),2):
             df = df[(df['Site']==id_radioItems)&(df['equipe_domicile']==l[i])]
             fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_domicile'],name='Cote Domicile ('+l[i]+')'))
-            fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_exterieur'],name='Cote Extérieur ('+l[i]+')'))
-            fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_nul'],name='Cote Nul ('+l[i]+')'))
+            fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_exterieur'],name='Cote Extérieur ('+l[i+1]+')'))
+            fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_nul'],name='Cote Nul ('+l[i]+' VS '+l[i+1]+')'))
     return fig
 
 @dashapp.callback(
