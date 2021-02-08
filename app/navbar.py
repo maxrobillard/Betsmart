@@ -5,32 +5,28 @@ import dash_html_components as html
 
 
 def Navbar():
-    LOGO = "static/img/esiee.png"
+    LOGO = "/static/img/esiee.png"
     items=[
-        dbc.DropdownMenuItem("Kaczmarczyk Victor",href="https://www.linkedin.com/in/victor-kaczmarczyk-747a85196/",external_link=True),
-        dbc.DropdownMenuItem("Robillard Maxime",href="https://www.linkedin.com/in/maxime-robillard/",external_link=True),
+        dbc.Row([dbc.DropdownMenuItem("Kaczmarczyk Victor",href="https://www.linkedin.com/in/victor-kaczmarczyk-747a85196/",external_link=True)]),
+        dbc.Row([dbc.DropdownMenuItem("Robillard Maxime",href="https://www.linkedin.com/in/maxime-robillard/",external_link=True)]),
         ]
-    navbar = dbc.Navbar(
+    navbar = dbc.Nav(
                     [
-                        #html.A(
-                            # Use row and col to control vertical alignment of logo / brand
-                            #dbc.Row(
-                            #        [
-                                    dbc.Col(html.A([html.Img(src=LOGO, height="50px")], href="https://www.esiee.fr"), width={"size":1}),
-                                    dbc.Col(dbc.NavbarBrand("Paris sportif sur", className="ml-2"), width={"size":10}),
-                                    #dbc.Col(dbc.DropdownMenu(items,label="Auteurs",color='secondary', className="m-1",in_navbar=True,direction="right"), width={"size":1, "order": "last", "offset": 4})
-                            #        ],
-                            #        align="center",
-                            #        no_gutters=True,
-                            #        justify="beetwen"
-                            #),
-                            #href="https://junioresiee.com",
-                            #),
-                        dbc.DropdownMenu(items,label="Auteurs",color='secondary', className="m-1",in_navbar=True,direction="left")
-                        #dbc.NavbarToggler(id="navbar-toggler"),
-                        #dbc.Collapse(search_bar, id="navbar-collapse", navbar=True),
+                        dbc.Row([
+                            dbc.Col([
+                                dbc.NavItem(dbc.Col(html.A([html.Img(src=LOGO, height="50px")], href="https://www.esiee.fr"), width={"size":1},)),
+                                dbc.NavItem(dbc.Col(dbc.NavbarBrand("Paris sportif sûr",), width={"size":10})),
+                                ],className="nav navbar-nav pull-left"),
+                            dbc.Col([
+                                dbc.NavItem(dbc.NavLink("Accueil", href="/",external_link=True,)),
+                                dbc.NavItem(dbc.NavLink("Recherche", href="/search",external_link=True,)),
+                                dbc.NavItem(dbc.NavLink("Scrapper", href="/scrape",external_link=True,)),
+                                dbc.NavItem(dbc.DropdownMenu(items,label="Auteurs",color='primary',direction="down"),style={"margin-top":"8px"})
+                                ],className="nav navbar-nav pull-right")
+
+                        ],style={"margin-left":"30px","width":"90%"})
                     ],
-                color="dark",
-                dark=True,
+                    className="navbar navbar-inverse navbar-fixed-top headroom",
+
             )
     return navbar

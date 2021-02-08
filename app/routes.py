@@ -222,7 +222,7 @@ body = html.Div(style={'backgroundColor': colors['background']},
 
 
 
-dashapp.layout = html.Div([body])
+dashapp.layout = html.Div(children=[body],style={"margin-top":"100px"})
 
 
 @dashapp.callback(
