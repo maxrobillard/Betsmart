@@ -26,7 +26,7 @@ import plotly.graph_objects as go
 from . import dashapp,mongo,client,MONGO_URI,db,dbbet,server,es_client
 
 colors = {
-  'background': '#5D6D7E',
+  'background': 'white',
   'text' : 'white',
   'PN': '#2874A6',
   'GN': '#A93226'
@@ -117,7 +117,7 @@ df = pd.concat([df,df_test])
 
 df_matches = ar.what_matches(df)
 list_surebets = ar.all_bets(ar.best_surebet(df),100)
-
+df_empty = pd.DataFrame({'Equipe':['Equipe 1', 'Equipe 2', 'Nul'],'Mise':[0,0,0],'Bookmaker':['Netbet','Zebet','Netbet'],'Cote':[0,0,0]})
 
 body = html.Div(style={'backgroundColor': colors['background']},
                             children=[
@@ -147,7 +147,7 @@ body = html.Div(style={'backgroundColor': colors['background']},
                                                         placeholder="Choisissez une match"
                                                     )
                                                 ),width=11
-                                            ),justify='center'
+                                            ),justify='center',style={'width':'98%','margin-left':'10px'}
                                         ),
                                         dbc.Row([
                                             dbc.Col(
@@ -156,7 +156,7 @@ body = html.Div(style={'backgroundColor': colors['background']},
                                                         id = 'fig_cotes',
                                                         figure = fg.evol_cote(df,'Paris','Marseille','zebet')
                                                     )
-                                                ),width=8
+                                                ),width=8,style={'width':'98%','margin-left':'20px'}
                                             ),
                                             dbc.Col(
                                                 html.Div(children=[
@@ -193,27 +193,27 @@ body = html.Div(style={'backgroundColor': colors['background']},
                                                             )
                                                         ]),
                                                         dbc.CardBody([
-                                                            # dt.DataTable(
-                                                            #     id='table',
-                                                            #     columns=[{"name":i, "id":i} for i in list_surebets[0].columns],
-                                                            #     data = list_surebets[0].to_dict('records')
-                                                            # )
+                                                             dt.DataTable(
+                                                                 id='table',
+                                                                 columns=[{"name":i, "id":i} for i in ['Equipe','Mise','Bookmaker','Cotes']],
+                                                                 data = df_empty.to_dict('records')
+                                                             )
 
                                                         ])
-                                                    ],color="dark")
-                                                ]),width=5
+                                                    ])
+                                                ]),width=5,style={'width':'98%','margin-left':'10px'}
 
                                             ),
                                             dbc.Col(
                                                 html.Div(children=[
-                                                    #dcc.Graph(id="Profit",
-                                                    #            figure=fg.fig_profit(ar.all_profits(ar.all_bets(ar.best_surebet(df))))
+                                                    dcc.Graph(id="Profit",
+                                                                figure=fg.fig_profit([0,0])
 
-                                                    #)
+                                                    )
                                                 ]),width=5
 
                                             )
-                                        ],align='center',justify='center'),
+                                        ],align='center',justify='center',no_gutters=True),
                                     ]
                                 )
                             ]
@@ -253,11 +253,11 @@ def update_fig_evo(match_dropdown,df=df):
             e1, e2 = match.split('/')
             l.append(e1)
             l.append(e2)
-        fig = evol_cote(df,l[0],l[1],'zebet')
+        fig = fg.evol_cote(df,l[0],l[1],'zebet')
         for i in range(2,len(l),2):
             df = df[(df['Site']=='zebet')&(df['equipe_domicile']==l[i])]
             fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_domicile'],name='Cote Domicile ('+l[i]+')'))
-            fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_exterieur'],name='Cote Extérieur ('+l[i+1]+')'))
+            fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_exterieur'],name='Cote Extérieur ('+l[i]+')'))
             fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_nul'],name='Cote Nul ('+l[i]+')'))
     return fig
 

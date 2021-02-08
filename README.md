@@ -50,6 +50,10 @@ Pour les dockers nous avons choisi de créer :
 - Un container **kibana** : Nous utilisons une image venant aussi de  ***docker.elastic.co***. Kibana permet de créer rapidement des dashboard, nous ne l'avons pas utilisé ici sauf pour l'administration des données sous elasticsearch.
 - Le **docker-compose.yml** qui permet de lier les différents containers et dockers. Ce qui permet a l'ensemble de fonctionner et d'intégrer le scraper et la base de données dans l'appli flask.
 
+**Infos partie Dashboard**
+
+Le dashboard est fonctionnel en version test dans le dossier dashboard. Taper 'py main.py' dans le dossier dashboard. Cependant, à cause d'un problème que nous n'avons pas pu résoudre les callback  fonctionnent partiellement rendant le dashboard inutilisable avec les données scrapées.
+
 Pour lancer le tout, taper la commande 'docker-compose up --build' lors de la première utilisation. Pour l'éteindre utiliser 'ctrl+c' et pour relancer le tout 'docker-compose up'.
 L'application tournera sur le **port 5000**
 
