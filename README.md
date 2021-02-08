@@ -54,6 +54,10 @@ Pour les dockers nous avons choisi de créer :
 
 Le dashboard est fonctionnel en version test dans le dossier dashboard. Taper 'py main.py' dans le dossier dashboard. Cependant, à cause d'un problème que nous n'avons pas pu résoudre les callback  fonctionnent partiellement rendant le dashboard inutilisable avec les données scrapées.
 
+**Infos Arbitrage**
+
+Les fonctions reliées au calcul de l'arbitrage se trouvent dans le dossier 'fonctions' dans le dossier 'App'. 
+
 Pour lancer le tout, taper la commande 'docker-compose up --build' lors de la première utilisation. Pour l'éteindre utiliser 'ctrl+c' et pour relancer le tout 'docker-compose up'.
 L'application tournera sur le **port 5000**
 

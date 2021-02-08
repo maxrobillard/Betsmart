@@ -28,7 +28,7 @@ def data_cleaning(data):
     return data
 
 def what_matches(data):
-    data = data[data['Date du match']>datetime.now()][['equipe_domicile','equipe_exterieur']].drop_duplicates()
+    data = data[data['Date du match']>=datetime.now()][['equipe_domicile','equipe_exterieur']].drop_duplicates()
     return data
 
 def match_dd(data,df_matches):

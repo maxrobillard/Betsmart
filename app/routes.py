@@ -156,20 +156,28 @@ body = html.Div(style={'backgroundColor': colors['background']},
                                                         id = 'fig_cotes',
                                                         figure = fg.evol_cote(df,'Paris','Marseille','zebet')
                                                     )
-                                                ),width=8,style={'width':'98%','margin-left':'20px'}
+                                                ),width=7,style={'width':'98%','margin-left':'20px'}
                                             ),
                                             dbc.Col(
                                                 html.Div(children=[
                                                     dbc.Card([
                                                         dbc.CardHeader([
-                                                            'Surebet'
+                                                            'Choix du Bookmaker'
                                                         ]),
                                                         dbc.CardBody([
+                                                            dbc.RadioItems(
+                                                                id='id_radioItems',
+                                                                options=[
+                                                                    {'label':'Zebet','value':'zebet'},
+                                                                    {'label':'Netbet','value':'netbet'},
+                                                                ],
+                                                                value='zebet'
+                                                            )
 
 
                                                         ])
-                                                    ],color="dark")
-                                                ]),width=3
+                                                    ],)
+                                                ]),width=3,style={'width':'98%','margin-left':'15px'}
                                             )
                                         ],align='center',justify='center'),
 
@@ -210,7 +218,7 @@ body = html.Div(style={'backgroundColor': colors['background']},
                                                                 figure=fg.fig_profit([0,0])
 
                                                     )
-                                                ]),width=5
+                                                ]),width=5,style={'width':'98%','margin-left':'10px'}
 
                                             )
                                         ],align='center',justify='center',no_gutters=True),
@@ -227,13 +235,13 @@ dashapp.layout = html.Div(children=[body],style={"margin-top":"100px"})
 
 @dashapp.callback(
         Output('fig_cotes','figure'),
-        [Input('match_dropdown', 'value')]
+        [Input('match_dropdown', 'value'),Input('id_radioItems','value')]
 )
 
-def update_fig_evo(match_dropdown,df=df):
+def update_fig_evo(match_dropdown,id_radioItems,df=df):
     if isinstance(match_dropdown, str):
         l = match_dropdown.split('/')
-        fig = fg.evol_cote(df,l[0],l[1],'zebet')
+        fig = fg.evol_cote(df,l[0],l[1],id_radioItems)
     elif match_dropdown==[]:
         fig = go.Figure()
         fig.update_layout(title = dict(text="Evolution de des cotes du match",
@@ -253,9 +261,9 @@ def update_fig_evo(match_dropdown,df=df):
             e1, e2 = match.split('/')
             l.append(e1)
             l.append(e2)
-        fig = fg.evol_cote(df,l[0],l[1],'zebet')
+        fig = fg.evol_cote(df,l[0],l[1],id_radioItems)
         for i in range(2,len(l),2):
-            df = df[(df['Site']=='zebet')&(df['equipe_domicile']==l[i])]
+            df = df[(df['Site']==id_radioItems)&(df['equipe_domicile']==l[i])]
             fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_domicile'],name='Cote Domicile ('+l[i]+')'))
             fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_exterieur'],name='Cote Extérieur ('+l[i]+')'))
             fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_nul'],name='Cote Nul ('+l[i]+')'))
@@ -268,5 +276,8 @@ def update_fig_evo(match_dropdown,df=df):
 )
 def update_table(surebet_dropdown):
     i = int(surebet_dropdown)
-    return [list_surebets[i].to_dict('records'),
-            fg.fig_profit([ar.profit(list_surebets[i]),0])]
+    if len(list_surebets) == 0:
+        return [df_empty.to_dict('records'),fg.fig_profit([0,0])]
+    else:
+        return [list_surebets[i].to_dict('records'),
+                fg.fig_profit([ar.profit(list_surebets[i]),0])]

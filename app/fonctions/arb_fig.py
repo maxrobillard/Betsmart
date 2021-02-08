@@ -3,8 +3,8 @@ import plotly_express as px
 import plotly.graph_objects as go
 
 colors = {
-  'background': '#5D6D7E',
-  'text' : 'white',
+  'background': '#FFFFFF',
+  'text' : 'black',
   'PN': '#2874A6',
   'GN': '#A93226'
 }
@@ -18,7 +18,7 @@ def evol_cote(df,equipe_dom,equipe_ext,site):
     fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_domicile'],name='Cote Domicile'))
     fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_exterieur'],name='Cote Extérieur'))
     fig.add_trace(go.Scatter(x=df['Date du scraping'],y=df['cote_nul'],name='Cote Nul'))
-    fig.update_layout(title = dict(text="Evolution de des cotes du match",
+    fig.update_layout(title = dict(text="Evolution des cotes du match",
                                 font = {"size":30},
                                 y=0.97,
                                 x=0.5,
