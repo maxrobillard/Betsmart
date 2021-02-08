@@ -10,8 +10,6 @@ colors = {
   'GN': '#A93226'
 }
 
-df = pd.read_csv('data.txt',sep='\t')
-df.columns = ['Site', 'Date du scraping', 'Championat','equipe_domicile', 'cote_domicile', 'equipe_exterieur', 'cote_exterieur', 'cote_nul', 'Date du match']
 
 
 def data_cleaning(data):
@@ -26,13 +24,14 @@ def data_cleaning(data):
     dfzebet['heure du match'] = date[1]
     data = pd.concat([dfnetbet,dfzebet])
     data[['Date du match']] = pd.to_datetime(data[['Date du match']].stack()).unstack()
+    data = data[['Site','Date du scraping','Championnat','equipe_domicile','cote_domicile','equipe_exterieur','cote_exterieur','cote_nul','Date du match']]
     return data
 
 def what_matches(data):
     data = data[data['Date du match']>datetime.now()][['equipe_domicile','equipe_exterieur']].drop_duplicates()
     return data
 
-def match_dd(data):
+def match_dd(data,df_matches):
     l_dic = []
     data = what_matches(data)
     for i in range(data.shape[0]):
@@ -115,16 +114,4 @@ def surebet_dd(data,mise=100):
         l_dic.append({'label':surebet['equipe'].iloc[0] +' vs '+surebet['equipe'].iloc[1],'value':str(i)})
     return l_dic
 
-
-
-df = data_cleaning(df)
-
-df_matches = what_matches(df)
-df_bets = best_surebet(df)
-bets = all_bets(df_bets,100)
-
-d = [{'label':df_matches['equipe_domicile'].iloc[i] +' vs '+df_matches['equipe_exterieur'].iloc[i],'value':[df_matches['equipe_domicile'].iloc[i]]} for i in range(df_matches.shape[0])]
-
-print(profit(bets[0]))
-print(all_profits(bets))
 #print(profit_dd(df))

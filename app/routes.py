@@ -11,18 +11,27 @@ from dash.dependencies import Input, Output
 import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
+import dash_table as dt
 from flask_bootstrap import Bootstrap
 
-from fonctions.arb_fig import evol_cote, fig_profit
-from fonctions.arbitrage import what_matches, df, match_dd, colors, best_surebet, all_bets, surebet_dd, all_profits, profit
+from app.fonctions import arb_fig as fg
+from app.fonctions import arbitrage as ar
 
-from navbar import Navbar
+from app import navbar as nav
 
 import plotly_express as px
 import plotly.graph_objects as go
 
 
 from . import dashapp,mongo,client,MONGO_URI,db,dbbet,server,es_client
+
+colors = {
+  'background': '#5D6D7E',
+  'text' : 'white',
+  'PN': '#2874A6',
+  'GN': '#A93226'
+}
+
 
 @server.route("/")
 def index():
@@ -91,13 +100,25 @@ def read_mongo(no_id=True):
         del df['_id']
     return df
 
+df = read_mongo()
 
-body = dbc.Container(
-    [
+#df = pd.read_csv('data.txt',sep='\t')
+df.columns = ['Date du scraping','Site', 'Championnat','cote_domicile','cote_exterieur', 'cote_nul','equipe_domicile','equipe_exterieur','Date du match']
+df = ar.data_cleaning(df)
 
-        html.Div(style={'backgroundColor': colors['background']},
+
+df_test = pd.read_csv('app/data.txt',sep='\t')
+df_test.columns = ['Site','Date du scraping','Championnat','equipe_domicile','cote_domicile','equipe_exterieur','cote_exterieur','cote_nul','Date du match']
+df_test = ar.data_cleaning(df_test)
+df = pd.concat([df,df_test])
+
+df_matches = ar.what_matches(df)
+list_surebets = ar.all_bets(ar.best_surebet(df),100)
+
+
+body = html.Div(style={'backgroundColor': colors['background']},
                             children=[
-                                html.Div(Navbar()),
+                                html.Div(nav.Navbar()),
                                 html.Div(
                                     className='app-header--title',
                                     children=[
@@ -109,14 +130,14 @@ body = dbc.Container(
                                         ],
                                     style={'marginTop':'50px'}
                                 ),
-                                html.Div(
+                                html.Div(style={'backgroundColor': colors['background']},
                                     children=[
                                         dbc.Row(
                                             dbc.Col(
                                                 html.Div(
                                                     dcc.Dropdown(
                                                         id='match_dropdown',
-                                                        options=match_dd(df),
+                                                        options=ar.match_dd(df,df_matches),
                                                         value=df_matches['equipe_domicile'].iloc[0]+'/'+df_matches['equipe_exterieur'].iloc[0],
                                                         #disabled=True,
                                                         multi = True,
@@ -130,7 +151,7 @@ body = dbc.Container(
                                                 html.Div(
                                                     dcc.Graph(
                                                         id = 'fig_cotes',
-                                                        figure = evol_cote(df,'Paris','Marseille','zebet')
+                                                        figure = fg.evol_cote(df,'Paris','Marseille','zebet')
                                                     )
                                                 ),width=8
                                             ),
@@ -152,7 +173,7 @@ body = dbc.Container(
 
                                     ]
                                 ),
-                                html.Div(
+                                html.Div(style={'backgroundColor': colors['background']},
                                     children=[
                                         dbc.Row([
                                             dbc.Col(
@@ -161,7 +182,7 @@ body = dbc.Container(
                                                         dbc.CardHeader([
                                                             dcc.Dropdown(
                                                                 id='surebet_dropdown',
-                                                                options=surebet_dd(df),
+                                                                options=ar.surebet_dd(df),
                                                                 value='0',
                                                                 #disabled=True,
                                                                 multi = False,
@@ -169,11 +190,11 @@ body = dbc.Container(
                                                             )
                                                         ]),
                                                         dbc.CardBody([
-                                                            dt.DataTable(
-                                                                id='table',
-                                                                columns=[{"name":i, "id":i} for i in list_surebets[0].columns],
-                                                                data = list_surebets[0].to_dict('records')
-                                                            )
+                                                            # dt.DataTable(
+                                                            #     id='table',
+                                                            #     columns=[{"name":i, "id":i} for i in list_surebets[0].columns],
+                                                            #     data = list_surebets[0].to_dict('records')
+                                                            # )
 
                                                         ])
                                                     ],color="dark")
@@ -182,10 +203,10 @@ body = dbc.Container(
                                             ),
                                             dbc.Col(
                                                 html.Div(children=[
-                                                    dcc.Graph(id="Profit",
-                                                                figure=fig_profit(all_profits(all_bets(best_surebet(df))))
+                                                    #dcc.Graph(id="Profit",
+                                                    #            figure=fg.fig_profit(ar.all_profits(ar.all_bets(ar.best_surebet(df))))
 
-                                                    )
+                                                    #)
                                                 ]),width=5
 
                                             )
@@ -196,9 +217,7 @@ body = dbc.Container(
         )
 
 
-    ],
-    className="mt-4",
-)
+
 
 dashapp.layout = html.Div([body])
 
@@ -211,7 +230,7 @@ dashapp.layout = html.Div([body])
 def update_fig_evo(match_dropdown,df=df):
     if isinstance(match_dropdown, str):
         l = match_dropdown.split('/')
-        fig = evol_cote(df,l[0],l[1],'zebet')
+        fig = fg.evol_cote(df,l[0],l[1],'zebet')
     elif match_dropdown==[]:
         fig = go.Figure()
         fig.update_layout(title = dict(text="Evolution de des cotes du match",
@@ -247,4 +266,4 @@ def update_fig_evo(match_dropdown,df=df):
 def update_table(surebet_dropdown):
     i = int(surebet_dropdown)
     return [list_surebets[i].to_dict('records'),
-            fig_profit([profit(list_surebets[i]),0])]
+            fg.fig_profit([ar.profit(list_surebets[i]),0])]

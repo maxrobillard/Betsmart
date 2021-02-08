@@ -1,9 +1,14 @@
 import pandas as pd
 import plotly_express as px
 import plotly.graph_objects as go
-from arbitrage import df, colors
 
-fig_evol_cote = px.line(df[df['Site']=='zebet'], x='Date du scraping', y=['cote_domicile','cote_exterieur','cote_nul'],color='equipe_domicile')
+colors = {
+  'background': '#5D6D7E',
+  'text' : 'white',
+  'PN': '#2874A6',
+  'GN': '#A93226'
+}
+
 
 
 def evol_cote(df,equipe_dom,equipe_ext,site):
@@ -26,7 +31,6 @@ def evol_cote(df,equipe_dom,equipe_ext,site):
                     )
     return fig
 
-fig_cote = evol_cote(df,'Leicester','Liverpool','zebet')
 
 
 def fig_profit(profits):

@@ -26,7 +26,7 @@ LOCAL = False
 es_client = Elasticsearch(hosts=["localhost" if LOCAL else "elasticsearch"])
 
 server = Flask(__name__,instance_relative_config= True)
-dashapp = Dash(__name__, server = server, routes_pathname_prefix='/dash/',
+dashapp = Dash(__name__,title='Dashboard', server = server, routes_pathname_prefix='/dash/',
 				external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 Bootstrap(server)
