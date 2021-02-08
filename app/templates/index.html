@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Accueil BetSmart </h1>
     {% if error %}
-    <div class="alert alert-danger">
+    <div class="alert alert-danger text-center">
     <p>Attention : {{error}}</p>
     </div>
     {% endif %}
@@ -12,5 +12,8 @@
     <p>L'objectif de notre projet est de scraper différents site de paris sportifs et de comparer les côtes par match. Pour l'instant, nous scrapons seulement deux sites Netbet et Zebet.
     Nous avons créé un dashboard pour la visualisation des différentes statistiques sur les équipes et les matchs à venir, ce qui devrait permettre à l'utilisateur de prendre de meilleures décisions. Nous aurions aimé entrainer une intelligence artificielle qui à l'aide d'une fonction de score trouve les meilleures combinaisons de paris avec les différents sites et donc minimise le risque de perte.
     Nous avons aussi réalisé un moteur de recherche à l'aide d'elasticsearch, ce qui permet de rechercher une équipe, un championnat ou un site en particulier.</p>
+
+    
+
 </div>
 {% endblock %}
