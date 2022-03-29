@@ -56,6 +56,7 @@ def is_a_surebet(data,equipe_1,equipe_2):
 
 def best_surebet(data):
     df_matches = what_matches(data)
+    #comments
     [list_S, list_s1, list_s2, list_s3, liste_e1, liste_e2, list_cote_dom, list_cote_ext, list_cote_nul] = [[] for k in range(9)]
     for k in range(df_matches.shape[0]):
         S, site_1, site_2, site_3, cote_e1, cote_e2, cote_nul = is_a_surebet(data,data['equipe_domicile'].iloc[k],data['equipe_exterieur'].iloc[k])
